@@ -9,6 +9,7 @@ import Button from '../components/Button';
 import TextButton from '../components/TextButton';
 import TextField from '../components/TextField';
 import request from '../utils/request';
+import navigationUtil from '../utils/navigation';
 
 class Login extends Component {
   state = {};
@@ -52,7 +53,7 @@ class Login extends Component {
       data: { username, password }
     })
       .then(() => {
-        self.props.navigation.navigate('Main');
+        navigationUtil.reset(self.props.navigation, 'Main');
       })
       .catch(err => {
         Alert.alert('登录失败', err.message || err);
