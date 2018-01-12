@@ -20,6 +20,12 @@ const Main = TabNavigator({
       headerTitle: '我的'
     }
   }
+}, {
+  tabBarOptions: {
+    labelStyle: {
+      fontSize: 16
+    }
+  }
 });
 
 const AppNavigator = StackNavigator({
