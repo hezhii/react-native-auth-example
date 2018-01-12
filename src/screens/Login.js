@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import {
   View,
-  StyleSheet
+  StyleSheet,
+  Alert
 } from 'react-native';
 
 import Button from '../components/Button';
 import TextButton from '../components/TextButton';
 import TextField from '../components/TextField';
+import request from '../utils/request';
 
 class Login extends Component {
   state = {};
@@ -29,6 +31,7 @@ class Login extends Component {
         />
         <Button
           isDisabled={!username || !password}
+          onPress={this.login}
         >登录</Button>
         <View style={styles.textBtnContainer}>
           <TextButton
@@ -39,6 +42,22 @@ class Login extends Component {
       </View>
     );
   }
+
+  login = () => {
+    const { username, password } = this.state;
+    const self = this;
+    request({
+      method: 'POST',
+      url: '/login',
+      data: { username, password }
+    })
+      .then(() => {
+        self.props.navigation.navigate('Main');
+      })
+      .catch(err => {
+        Alert.alert('登录失败', err.message || err);
+      });
+  };
 }
 
 const styles = StyleSheet.create({

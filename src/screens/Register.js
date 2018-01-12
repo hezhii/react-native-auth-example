@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import {
   View,
-  StyleSheet
+  StyleSheet,
+  Alert
 } from 'react-native';
 
 import Button from '../components/Button';
 import TextField from '../components/TextField';
+import request from '../utils/request';
 
 class Register extends Component {
   state = {};
@@ -27,10 +29,27 @@ class Register extends Component {
         />
         <Button
           isDisabled={!username || !password}
+          onPress={this.register}
         >注册</Button>
       </View>
     );
   }
+
+  register = () => {
+    const { username, password } = this.state;
+    const self = this;
+    request({
+      method: 'POST',
+      url: '/register',
+      data: { username, password }
+    })
+      .then(() => {
+        Alert.alert('注册成功');
+      })
+      .catch(err => {
+        Alert.alert('注册失败', err.message || err);
+      });
+  };
 }
 
 const styles = StyleSheet.create({
