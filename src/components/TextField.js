@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 17,
-    marginRight: 30,
+    width: 85,
     paddingVertical: 2
   },
   edit: {

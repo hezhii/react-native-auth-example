@@ -7,9 +7,11 @@ import {
 
 class TextButton extends Component {
   render() {
-    const { children } = this.props;
+    const { children, onPress } = this.props;
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={onPress}
+      >
         <Text style={styles.buttonText}>{children}</Text>
       </TouchableOpacity>
     );

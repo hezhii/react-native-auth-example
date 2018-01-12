@@ -4,15 +4,15 @@ import {
   StyleSheet
 } from 'react-native';
 
+import Button from '../components/Button';
 import TextButton from '../components/TextButton';
 import TextField from '../components/TextField';
-
-const Button = require('apsl-react-native-button');
 
 class Login extends Component {
   state = {};
 
   render() {
+    const { navigation } = this.props;
     const { username, password } = this.state;
     return (
       <View style={styles.container}>
@@ -28,12 +28,12 @@ class Login extends Component {
           onChange={value => this.setState({ password: value })}
         />
         <Button
-          style={styles.button}
-          textStyle={styles.buttonText}
           isDisabled={!username || !password}
         >登录</Button>
         <View style={styles.textBtnContainer}>
-          <TextButton>新用户注册</TextButton>
+          <TextButton
+            onPress={() => navigation.navigate('Register')}
+          >新用户注册</TextButton>
           <TextButton>忘记密码？</TextButton>
         </View>
       </View>
@@ -46,16 +46,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
     backgroundColor: '#fff'
-  },
-  button: {
-    marginVertical: 16,
-    backgroundColor: '#1890ff',
-    borderRadius: 5,
-    borderWidth: 0
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16
   },
   textBtnContainer: {
     flexDirection: 'row',
