@@ -9,22 +9,34 @@ import Register from './screens/Register';
 
 const Main = TabNavigator({
   Home: {
-    screen: Home
+    screen: Home,
+    navigationOptions: {
+      headerTitle: '主页'
+    }
   },
   Profile: {
-    screen: Profile
+    screen: Profile,
+    navigationOptions: {
+      headerTitle: '我的'
+    }
   }
 });
 
 const AppNavigator = StackNavigator({
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      headerTitle: '登录'
+    }
+  },
   Main: {
     screen: Main
   },
-  Login: {
-    screen: Login
-  },
   Register: {
-    screen: Register
+    screen: Register,
+    navigationOptions: {
+      headerTitle: '注册'
+    }
   }
 });
 
