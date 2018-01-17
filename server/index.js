@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const uuidv4 = require('uuid/v4');
 const app = express();
+
+const ACCESS_TOKENS = {};
+const REFRESH_TOKENS = {};
 
 const USERS = {
   admin: 'admin'
@@ -34,7 +38,15 @@ app.post('/login', function (req, res) {
   const { username, password } = req.body;
   console.log(`用户：${username}，正在登录，登录密码为：${password}`);
   if (USERS[username] === password) {
-    res.json(responseSuccess('登录成功'));
+    const accessToken = uuidv4();
+    const refreshToken = uuidv4();
+    ACCESS_TOKENS[accessToken] = username;
+    REFRESH_TOKENS[refreshToken] = username;
+    res.json(responseSuccess('登录成功', {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      expires_in: 7200 // access_token 过期时间为 2 小时
+    }));
     console.log(`用户: ${username} 登录成功`);
   } else {
     res.json(responseError('用户名或密码错误'));
