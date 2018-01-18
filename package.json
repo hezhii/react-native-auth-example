@@ -11,6 +11,7 @@
     "qs": "^6.5.1",
     "react": "16.2.0",
     "react-native": "0.52.0",
+    "react-native-storage": "^0.2.2",
     "react-navigation": "^1.0.0-beta.25"
   },
   "devDependencies": {

@@ -10,6 +10,7 @@ import TextButton from '../components/TextButton';
 import TextField from '../components/TextField';
 import request from '../utils/request';
 import navigationUtil from '../utils/navigation';
+import { saveToken } from '../utils/storage';
 
 class Login extends Component {
   state = {};
@@ -52,7 +53,9 @@ class Login extends Component {
       url: '/login',
       data: { username, password }
     })
-      .then(() => {
+      .then((data) => {
+        console.log('登录成功：' + JSON.stringify(data));
+        saveToken(data.data);
         navigationUtil.reset(self.props.navigation, 'Main');
       })
       .catch(err => {
