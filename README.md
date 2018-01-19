@@ -2,6 +2,8 @@
 
 身份验证是 APP 中十分常见的一个模块，此示例基于 React Navigation 和 Token 机制实现了 React Native APP 中的身份验证流程。
 
+<div align=center><img src=".github/demo.gif"></div>
+
 ## 如何测试
 
 1. 启动 APP
