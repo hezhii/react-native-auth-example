@@ -6,6 +6,8 @@ import {
 
 import Button from '../components/Button';
 import navigationUtil from '../utils/navigation';
+import { removeTokens } from '../utils/storage';
+import { requestWithToken } from '../utils/request';
 
 class Profile extends Component {
   render() {
@@ -21,6 +23,11 @@ class Profile extends Component {
   }
 
   logout = () => {
+    requestWithToken({
+      method: 'GET',
+      url: '/logout'
+    });
+    removeTokens();
     navigationUtil.reset(this.props.navigation, 'Login');
   };
 }

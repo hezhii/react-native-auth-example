@@ -17,7 +17,7 @@ const DEFAULT_HEADERS = {
  * @param {Object} options.params - url 参数
  * @param {Object} options.data - 请求体数据
  */
-export default function request({ url, method, headers, params, data }) {
+export default function request({ url, method, headers, params, data, access_token }) {
   let isOk;
   url = BASE_URL + url;
   if (params) {
@@ -26,7 +26,7 @@ export default function request({ url, method, headers, params, data }) {
   return new Promise((resolve, reject) => {
     fetch(url, {
       method,
-      headers: { ...DEFAULT_HEADERS, ...headers },
+      headers: { ...DEFAULT_HEADERS, ...headers, Authorization: access_token },
       body: JSON.stringify(data)
     })
       .then(response => {
@@ -44,6 +44,11 @@ export default function request({ url, method, headers, params, data }) {
         reject(err);
       });
   });
+}
+
+export function requestWithToken(options) {
+  return storage.load({ key: 'accessToken' })
+    .then(result => request({ ...options, access_token: result }));
 }
 
 export function refreshToken() {

@@ -81,6 +81,18 @@ app.get('/refresh_token', function (req, res) {
   res.json(responseError('token 错误'));
 });
 
+app.get('/logout', function (req, res) {
+  const token = req.headers && req.headers.authorization;
+  console.log('Log out with token: ' + token);
+  if (token && ACCESS_TOKENS[token]) {
+    clearOldToken(ACCESS_TOKENS[token]);
+    res.json(responseSuccess('登出成功'));
+    console.log(`ACCESS_TOKENS:${JSON.stringify(ACCESS_TOKENS)}\nREFRESH_TOKENS:${JSON.stringify(REFRESH_TOKENS)}`);
+  } else {
+    res.json(responseError('token 错误'));
+  }
+});
+
 const server = app.listen(8080, function () {
   const host = server.address().address;
   const port = server.address().port;

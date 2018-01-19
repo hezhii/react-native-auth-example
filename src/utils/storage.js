@@ -26,3 +26,12 @@ export function saveToken({ access_token, refresh_token, expires_in }) {
     expires: 1000 * 3600 * 24 * 30 // refresh_token 保存 30 天
   });
 }
+
+export function removeTokens() {
+  storage.remove({
+    key: 'accessToken'
+  });
+  storage.remove({
+    key: 'refreshToken'
+  });
+}
