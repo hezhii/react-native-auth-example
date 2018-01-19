@@ -93,6 +93,18 @@ app.get('/logout', function (req, res) {
   }
 });
 
+app.get('/profile', function (req, res) {
+  const token = req.headers && req.headers.authorization;
+  console.log('Get profile with token: ' + token);
+  if (token && ACCESS_TOKENS[token]) {
+    res.json(responseSuccess('成功获取用户信息', {
+      username: ACCESS_TOKENS[token]
+    }));
+  } else {
+    res.json(responseError('token 错误'));
+  }
+});
+
 const server = app.listen(8080, function () {
   const host = server.address().address;
   const port = server.address().port;
