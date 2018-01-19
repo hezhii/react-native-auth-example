@@ -100,6 +100,7 @@ app.get('/profile', function (req, res) {
     res.json(responseSuccess('成功获取用户信息', {
       username: ACCESS_TOKENS[token]
     }));
+    console.log('成功获取用户信息');
   } else {
     res.json(responseError('token 错误'));
   }

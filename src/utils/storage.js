@@ -1,10 +1,19 @@
 import { AsyncStorage } from 'react-native';
 import Storage from 'react-native-storage';
+import { refreshToken } from './request';
 
 export const storage = new Storage({
   size: 1000,
   storageBackend: AsyncStorage,
-  defaultExpires: null
+  defaultExpires: null,
+  sync: {
+    accessToken(params) {
+      let { resolve, reject } = params;
+      refreshToken()
+        .then(data => resolve && resolve(data.access_token))
+        .catch(err => reject && reject(err));
+    }
+  }
 });
 
 /**
@@ -18,7 +27,8 @@ export function saveToken({ access_token, refresh_token, expires_in }) {
   storage.save({
     key: 'accessToken',
     data: access_token,
-    expires: 1000 * (expires_in - 120) // access_token 有效期 2 小时，保险起见客户端减少 2 分钟
+    expires: 1000 * 10 // 10s 后过期，测试自动刷新 token
+    // expires: 1000 * (expires_in - 120) // access_token 有效期 2 小时，保险起见客户端减少 2 分钟
   });
   storage.save({
     key: 'refreshToken',

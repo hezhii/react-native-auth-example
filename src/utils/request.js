@@ -47,11 +47,14 @@ export default function request({ url, method, headers, params, data, access_tok
 }
 
 export function requestWithToken(options) {
-  return storage.load({ key: 'accessToken' })
-    .then(result => request({ ...options, access_token: result }));
+  return storage.load({
+    key: 'accessToken',
+    syncInBackground: false
+  }).then(result => request({ ...options, access_token: result }));
 }
 
 export function refreshToken() {
+  console.log('Refresh token...');
   return storage.load({
     key: 'refreshToken'
   }).then(result => {
@@ -61,8 +64,9 @@ export function refreshToken() {
       params: {
         refresh_token: result
       }
-    }).then(data => {
-      saveToken(data.data);
+    }).then(({ data }) => {
+      saveToken(data);
+      return data;
     });
   });
 }
