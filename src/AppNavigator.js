@@ -28,22 +28,24 @@ const Main = TabNavigator({
   }
 });
 
-const AppNavigator = StackNavigator({
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      headerTitle: '登录'
+export default function configAppNavigator(isLoggedIn) {
+  return StackNavigator({
+    Login: {
+      screen: Login,
+      navigationOptions: {
+        headerTitle: '登录'
+      }
+    },
+    Main: {
+      screen: Main
+    },
+    Register: {
+      screen: Register,
+      navigationOptions: {
+        headerTitle: '注册'
+      }
     }
-  },
-  Main: {
-    screen: Main
-  },
-  Register: {
-    screen: Register,
-    navigationOptions: {
-      headerTitle: '注册'
-    }
-  }
-});
-
-export default AppNavigator;
+  }, {
+    initialRouteName: isLoggedIn ? 'Main' : 'Login'
+  });
+};

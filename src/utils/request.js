@@ -1,3 +1,5 @@
+import { saveToken, storage } from './storage';
+
 const qs = require('qs');
 
 const BASE_URL = 'http://localhost:8080';
@@ -19,7 +21,7 @@ export default function request({ url, method, headers, params, data }) {
   let isOk;
   url = BASE_URL + url;
   if (params) {
-    url = url + paramsSerializer(params);
+    url = url + '?' + paramsSerializer(params);
   }
   return new Promise((resolve, reject) => {
     fetch(url, {
@@ -39,9 +41,24 @@ export default function request({ url, method, headers, params, data }) {
         }
       })
       .catch((err) => {
-        console.log(err);
         reject(err);
       });
+  });
+}
+
+export function refreshToken() {
+  return storage.load({
+    key: 'refreshToken'
+  }).then(result => {
+    return request({
+      method: 'GET',
+      url: '/refresh_token',
+      params: {
+        refresh_token: result
+      }
+    }).then(data => {
+      saveToken(data.data);
+    });
   });
 }
 
